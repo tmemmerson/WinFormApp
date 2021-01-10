@@ -26,11 +26,23 @@ namespace CodeChallenge
         public Form1()
         {
             InitializeComponent();
+            this.BackColor = Color.FromArgb(57, 134, 219);
         }
 
         private void btnClickThis_Click(object sender, EventArgs e)
         {
-            lblHelloWorld.Text = "Hello World!";
+            
+            lblHelloWorld.Text = "submitted";
+        }
+
+        private void lblHelloWorld_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -31,7 +31,6 @@ namespace CodeChallenge
         {
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.btnClickThis = new System.Windows.Forms.Button();
             this.lblHelloWorld = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -51,33 +50,24 @@ namespace CodeChallenge
             this.textBox1.Size = new System.Drawing.Size(687, 27);
             this.textBox1.TabIndex = 1;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(26, 126);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 29);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // btnClickThis
             // 
             this.btnClickThis.Location = new System.Drawing.Point(753, 189);
             this.btnClickThis.Name = "btnClickThis";
             this.btnClickThis.Size = new System.Drawing.Size(94, 29);
             this.btnClickThis.TabIndex = 3;
-            this.btnClickThis.Text = "click me!";
+            this.btnClickThis.Text = "submit!";
             this.btnClickThis.UseVisualStyleBackColor = true;
             this.btnClickThis.Click += new System.EventHandler(this.btnClickThis_Click);
             // 
             // lblHelloWorld
             // 
             this.lblHelloWorld.AutoSize = true;
-            this.lblHelloWorld.Location = new System.Drawing.Point(765, 237);
+            this.lblHelloWorld.Location = new System.Drawing.Point(853, 193);
             this.lblHelloWorld.Name = "lblHelloWorld";
-            this.lblHelloWorld.Size = new System.Drawing.Size(50, 20);
+            this.lblHelloWorld.Size = new System.Drawing.Size(0, 20);
             this.lblHelloWorld.TabIndex = 4;
-            this.lblHelloWorld.Text = "label1";
+            this.lblHelloWorld.Click += new System.EventHandler(this.lblHelloWorld_Click);
             // 
             // Form1
             // 
@@ -86,11 +76,11 @@ namespace CodeChallenge
             this.ClientSize = new System.Drawing.Size(2121, 1453);
             this.Controls.Add(this.lblHelloWorld);
             this.Controls.Add(this.btnClickThis);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.richTextBox1);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -100,7 +90,6 @@ namespace CodeChallenge
 
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnClickThis;
         private System.Windows.Forms.Label lblHelloWorld;
     }
