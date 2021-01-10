@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,12 +28,48 @@ namespace CodeChallenge
         {
             InitializeComponent();
             this.BackColor = Color.FromArgb(57, 134, 219);
+            
+ 
+            
         }
 
         private void btnClickThis_Click(object sender, EventArgs e)
         {
-            
-            lblHelloWorld.Text = "submitted";
+            var titleText = textBox1;
+
+            var bodyText = richTextBox1.Text;
+
+            var allStringInTextbox = bodyText.Split(" ");
+
+            var finalSearchWords = new List<string>();
+
+            foreach (var word in allStringInTextbox)
+            {
+                if (word.Any(char.IsLower))
+                {
+
+
+                    continue;
+                }
+
+                finalSearchWords.Add(word);
+
+
+            }
+
+
+
+            string createText = $"We are searching for {textBox1} with body";
+
+            var imageSearchPhrase = titleText;
+
+            foreach (var word in finalSearchWords)
+            {
+                imageSearchPhrase.AppendText(" " + word);
+            }
+
+            var finalPrintout = imageSearchPhrase;
+
         }
 
         private void lblHelloWorld_Click(object sender, EventArgs e)
@@ -40,14 +77,27 @@ namespace CodeChallenge
 
         }
 
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void label3_Click_1(object sender, EventArgs e)
+        {
+
+        }
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+        
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
