@@ -9,6 +9,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HtmlAgilityPack;
 
 // I need a title field
 // I need a body field
@@ -37,7 +38,7 @@ namespace CodeChallenge
         private void btnClickThis_Click(object sender, EventArgs e)
         {
             var searchQueryPrefix = "http://www.google.com/search?q=";
-            var searchQuerySuffix = "&hl=en&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi7gvj575LuAhXjK30KHSNMBRoQ_AUoAXoECBYQAw&cshid=1610333569422809&biw=1671&bih=1514";
+            //var searchQuerySuffix = "&hl=en&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi7gvj575LuAhXjK30KHSNMBRoQ_AUoAXoECBYQAw&cshid=1610333569422809&biw=1671&bih=1514"
             var titleText = textBox1.Text;
 
             var bodyText = richTextBox1.Text;
@@ -65,8 +66,11 @@ namespace CodeChallenge
             }
 
             var finalPrintout = imageSearchPhrase;
-            
+
+            /////////////
+
             string requestUrl = "https://www.google.com/search?q=" + finalPrintout + "&tbm=isch";
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
             string resultPage = string.Empty;
             using (HttpWebResponse httpWebResponse = (HttpWebResponse)request.GetResponse())
@@ -78,6 +82,23 @@ namespace CodeChallenge
                         resultPage = reader.ReadToEnd();
                     }
                 }
+            }
+
+            var url = requestUrl;
+            var web = new HtmlWeb();
+            var doc = web.Load(url);
+
+            var imageNodes = doc.DocumentNode.Descendants("img").ToList();
+
+            var displayImageLinks = new List<string>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                var imgString = imageNodes[i].OuterHtml;
+                var picIndexStart = imgString.IndexOf("data-src=", 0) + 10;
+                var picEnd = imgString.IndexOf("jsaction") - 17;
+                var imageLinkString = imgString.Substring(picIndexStart, picEnd);
+                displayImageLinks.Add(imageLinkString);
             }
 
         }
