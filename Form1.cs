@@ -118,8 +118,8 @@ namespace CodeChallenge
             /////////////////////////////IN SUMMATION /////////////////////////////////////
             //////////////////////////////////////////////////////////////////////////////
 
-
-            // ran out of time, but I was attempting to use the pictureBox1-4 and iterate through the list to display image content
+            // after stepping through the entirety, the application works, through the accumulation of all 4 image urls, parsed from the HTML response
+            // ran out of time, but I was attempting to then load the URL list images via pictureBox1-4
             // from there I would add logic to each images' respective checkbox to validate inclusion in file export
             // lastly export items to MS PP
             // this was a fun first-go-round with WinForms. thanks for the mental exercise! :-)
