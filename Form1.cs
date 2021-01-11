@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,11 +36,14 @@ namespace CodeChallenge
 
         private void btnClickThis_Click(object sender, EventArgs e)
         {
-            var titleText = textBox1;
+            var searchQueryPrefix = "http://www.google.com/search?q=";
+            var searchQuerySuffix = "&hl=en&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi7gvj575LuAhXjK30KHSNMBRoQ_AUoAXoECBYQAw&cshid=1610333569422809&biw=1671&bih=1514";
+            var titleText = textBox1.Text;
 
             var bodyText = richTextBox1.Text;
 
             var allStringInTextbox = bodyText.Split(" ");
+            var allStringInTitlebox = titleText.Split(" ");
 
             var finalSearchWords = new List<string>();
 
@@ -47,28 +51,34 @@ namespace CodeChallenge
             {
                 if (word.Any(char.IsLower))
                 {
-
-
                     continue;
                 }
 
                 finalSearchWords.Add(word);
-
-
             }
 
-
-
-            string createText = $"We are searching for {textBox1} with body";
-
-            var imageSearchPhrase = titleText;
+            var imageSearchPhrase = titleText.Replace(" ", "+");
 
             foreach (var word in finalSearchWords)
             {
-                imageSearchPhrase.AppendText(" " + word);
+                imageSearchPhrase += "+" + word;
             }
 
             var finalPrintout = imageSearchPhrase;
+            
+            string requestUrl = "https://www.google.com/search?q=" + finalPrintout + "&tbm=isch";
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
+            string resultPage = string.Empty;
+            using (HttpWebResponse httpWebResponse = (HttpWebResponse)request.GetResponse())
+            {
+                using (Stream responseStream = httpWebResponse.GetResponseStream())
+                {
+                    using (StreamReader reader = new StreamReader(responseStream))
+                    {
+                        resultPage = reader.ReadToEnd();
+                    }
+                }
+            }
 
         }
 
