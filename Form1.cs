@@ -100,8 +100,37 @@ namespace CodeChallenge
                 var imageLinkString = imgString.Substring(picIndexStart, picEnd);
                 displayImageLinks.Add(imageLinkString);
             }
-
+         //   pictureBox2.Image = urlDownload(imageNodes[0]);
+          //  pictureBox2.Image = urlDownload(imageNodes[1]);
+          //  pictureBox3.Image = urlDownload(imageNodes[2]);
+            //pictureBox4.Image = urlDownload(imageNodes[3]);
         }
+
+        public Image urlDownload(string picUrl)
+        {
+            Image image = null;
+            try
+            {
+               var webRequest = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(picUrl);
+                webRequest.AllowWriteStreamBuffering = true;
+                webRequest.Timeout = 30000;
+
+                WebResponse webResponse = webRequest.GetResponse();
+
+                Stream stream = webResponse.GetResponseStream();
+
+                image = System.Drawing.Image.FromStream(stream);
+
+                webResponse.Close();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return image;
+        }
+        
 
         private void lblHelloWorld_Click(object sender, EventArgs e)
         {
@@ -128,7 +157,10 @@ namespace CodeChallenge
         {
 
         }
-        
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
