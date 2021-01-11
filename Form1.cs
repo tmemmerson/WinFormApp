@@ -38,18 +38,20 @@ namespace CodeChallenge
         private void btnClickThis_Click(object sender, EventArgs e)
         {
             var searchQueryPrefix = "http://www.google.com/search?q=";
-            //var searchQuerySuffix = "&hl=en&source=lnms&tbm=isch&sa=X&ved=2ahUKEwi7gvj575LuAhXjK30KHSNMBRoQ_AUoAXoECBYQAw&cshid=1610333569422809&biw=1671&bih=1514"
             var titleText = textBox1.Text;
-
             var bodyText = richTextBox1.Text;
 
+            // split user input on spaces to iterate through
             var allStringInTextbox = bodyText.Split(" ");
             var allStringInTitlebox = titleText.Split(" ");
 
+            //instantiate new list to push validated elements to
             var finalSearchWords = new List<string>();
 
+            //loop through user input body
             foreach (var word in allStringInTextbox)
             {
+                //validation through IsLower method
                 if (word.Any(char.IsLower))
                 {
                     continue;
@@ -58,6 +60,7 @@ namespace CodeChallenge
                 finalSearchWords.Add(word);
             }
 
+            //replace spaces with + for query syntax and iterate through title in similar fashion including all elements though
             var imageSearchPhrase = titleText.Replace(" ", "+");
 
             foreach (var word in finalSearchWords)
@@ -69,8 +72,10 @@ namespace CodeChallenge
 
             /////////////
 
+            //request string construction
             string requestUrl = "https://www.google.com/search?q=" + finalPrintout + "&tbm=isch";
 
+            //open stream connection to retrieve html response object
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
             string resultPage = string.Empty;
             using (HttpWebResponse httpWebResponse = (HttpWebResponse)request.GetResponse())
@@ -88,49 +93,41 @@ namespace CodeChallenge
             var web = new HtmlWeb();
             var doc = web.Load(url);
 
+            //using agility parse response
             var imageNodes = doc.DocumentNode.Descendants("img").ToList();
 
             var displayImageLinks = new List<string>();
-
+            //excise only first 4 instances of found url in response
             for (int i = 0; i < 4; i++)
             {
+                //locate response slices needed using IndexOf and Substring to build the URL
                 var imgString = imageNodes[i].OuterHtml;
                 var picIndexStart = imgString.IndexOf("data-src=", 0) + 10;
                 var picEnd = imgString.IndexOf("jsaction") - 17;
                 var imageLinkString = imgString.Substring(picIndexStart, picEnd);
                 displayImageLinks.Add(imageLinkString);
             }
-         //   pictureBox2.Image = urlDownload(imageNodes[0]);
-          //  pictureBox2.Image = urlDownload(imageNodes[1]);
-          //  pictureBox3.Image = urlDownload(imageNodes[2]);
+
+            //pictureBox2.Image = urlDownload(imageNodes[0]);
+            //pictureBox2.Image = urlDownload(imageNodes[1]);
+            //pictureBox3.Image = urlDownload(imageNodes[2]);
             //pictureBox4.Image = urlDownload(imageNodes[3]);
+
+            /////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////IN SUMMATION /////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////
+
+
+            // ran out of time, but I was attempting to use the pictureBox1-4 and iterate through the list to display image content
+            // from there I would add logic to each images' respective checkbox to validate inclusion in file export
+            // lastly export items to MS PP
+            // this was a fun first-go-round with WinForms. thanks for the mental exercise! :-)
+
         }
 
-        public Image urlDownload(string picUrl)
-        {
-            Image image = null;
-            try
-            {
-               var webRequest = (System.Net.HttpWebRequest)System.Net.HttpWebRequest.Create(picUrl);
-                webRequest.AllowWriteStreamBuffering = true;
-                webRequest.Timeout = 30000;
 
-                WebResponse webResponse = webRequest.GetResponse();
 
-                Stream stream = webResponse.GetResponseStream();
-
-                image = System.Drawing.Image.FromStream(stream);
-
-                webResponse.Close();
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-
-            return image;
-        }
-        
 
         private void lblHelloWorld_Click(object sender, EventArgs e)
         {
